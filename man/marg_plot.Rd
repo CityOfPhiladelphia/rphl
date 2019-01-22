@@ -12,10 +12,16 @@ marg_plot(res, dat, y_scale = function(x) scales::percent(x, accuracy =
 
 \item{dat}{Dataset used to estimate models (used to recover sample sizes)}
 
-\item{y_scale}{Function that takes a numeric argument and returns a character for output labels}
+\item{y_scale}{Function that takes a numeric argument and returns a character
+for output labels}
 }
 \description{
-Function to plot marginal levels / effects
+In most situations, the plot will place treatments on the x axis, predicted
+values (whether levels or effects) on the y axis, and will facet by subgroup,
+if any. The only exception is when the input is marginal *effects* rather than
+marginal *levels*, **and** there are only two treatment levels. In this case,
+the x axis will display subgroup, since there would be only one treatment to
+display in each facet.
 }
 \examples{
 library(dplyr)
@@ -26,34 +32,54 @@ data(mtcars)
 dat <- mtcars \%>\%
   mutate_at(vars(cyl, am), as.factor)
 
+# Overall
 mod <- glm(mpg ~ disp + cyl, data = dat)
+
+# Main levels
 res <- modmarg::marg(mod, var_interest = "cyl")
-print(res)
-
 marg_plot(
   res,
   dat = dat,
   y_scale = function(x) round(x, digits = 1)) +
   labs(x = "Cylinders", y = "Predicted miles per gallon")
 
+# Main effects
+res <- modmarg::marg(mod, var_interest = "cyl", type = "effects")
+marg_plot(
+  res,
+  dat = dat,
+  y_scale = function(x) round(x, digits = 1)) +
+  labs(x = "Cylinders", y = "Predicted miles per gallon")
+
+# Subgroups
 mod_sub <- glm(mpg ~ disp + cyl * am, data = dat)
-res <- sub_marg(mod_sub, var_interest = "cyl", subgroup = "am")
-print(res)
 
+# Levels
+res <- sub_marg(mod_sub, var_interest = "cyl", subgroup = "am")
 marg_plot(
   res,
   dat = dat,
   y_scale = function(x) round(x, digits = 1)) +
   labs(x = "Cylinders", y = "Predicted miles per gallon")
 
+# Effects
 res <- sub_marg(mod_sub, var_interest = "cyl", subgroup = "am",
                 type = "effects")
-print(res)
-
 marg_plot(
   res,
   dat = dat,
   y_scale = function(x) round(x, digits = 1)) +
   labs(x = "Cylinders", y = "Predicted miles per gallon")
+
+# Subgroup effects with two treatment levels
+res <- sub_marg(
+  mod_sub,
+  var_interest = "am",
+  subgroup = "cyl",
+  type = "effects")
+
+marg_plot(
+res, dat = dat, y_scale = function(x) round(x, digits = 1)) +
+labs(x = "am", y = "Predicted miles per gallon")
 
 }
