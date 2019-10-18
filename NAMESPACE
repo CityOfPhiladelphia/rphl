@@ -2,9 +2,6 @@
 
 export(get_carto)
 export(get_colors)
-export(marg_plot)
-export(marg_table)
 export(scale_color_phl)
 export(scale_fill_phl)
-export(sub_marg)
 export(theme_phl)
