@@ -48,7 +48,7 @@ library(ggplot2)
 ggplot(iris, aes(Sepal.Width, Sepal.Length, color = Species)) +
   geom_point(size = 3) +
   scale_color_phl() +
-  theme_phl()
+  theme_phl(base_size = 14)
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-example-1.png" style="display: block; margin: auto;" />

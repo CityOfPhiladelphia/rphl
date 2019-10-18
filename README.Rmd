@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  fig.align = "center"
 )
 ```
 # rphl
@@ -44,6 +44,6 @@ library(ggplot2)
 ggplot(iris, aes(Sepal.Width, Sepal.Length, color = Species)) +
   geom_point(size = 3) +
   scale_color_phl() +
-  theme_phl()
+  theme_phl(base_size = 14)
 ```
 
