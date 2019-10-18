@@ -27,7 +27,6 @@ You can install the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("CityOfPhiladelphia/rphl")
 ```
-
 In order to use the package, you will have to install [Open Sans](https://fonts.google.com/specimen/Open+Sans) and [Montserrat](https://fonts.google.com/specimen/Montserrat) on your computer, and use the `extrafont` package to load the fonts into R:
 
 ``` r
@@ -35,6 +34,7 @@ In order to use the package, you will have to install [Open Sans](https://fonts.
 # install.packages("extrafont")
 extrafont::font_import()
 ```
+This step is only required once. Afterwards, `rphl` will automatically load the necessary fonts when attached with `library(rphl)`.
 
 ## Example
 
@@ -44,6 +44,8 @@ library(ggplot2)
 ggplot(iris, aes(Sepal.Width, Sepal.Length, color = Species)) +
   geom_point(size = 3) +
   scale_color_phl() +
+  labs(title = "Plot of Iris data using City of Philadelphia Standards",
+       x = "Sepal Width", y = "Sepal Length") +
   theme_phl(base_size = 14)
 ```
 

@@ -33,6 +33,9 @@ computer, and use the `extrafont` package to load the fonts into R:
 extrafont::font_import()
 ```
 
+This step is only required once. Afterwards, `rphl` will automatically
+load the necessary fonts when attached with `library(rphl)`.
+
 ## Example
 
 ``` r
@@ -48,6 +51,8 @@ library(ggplot2)
 ggplot(iris, aes(Sepal.Width, Sepal.Length, color = Species)) +
   geom_point(size = 3) +
   scale_color_phl() +
+  labs(title = "Plot of Iris data using City of Philadelphia Standards",
+       x = "Sepal Width", y = "Sepal Length") +
   theme_phl(base_size = 14)
 ```
 
