@@ -5,7 +5,7 @@
 \title{Function to plot marginal levels / effects}
 \usage{
 marg_plot(res, dat, y_scale = function(x) scales::percent(x, accuracy =
-  0.1))
+  0.1), color_fun = scale_color_phl, label_size = 3)
 }
 \arguments{
 \item{res}{Object output from \code{modmarg::marg}}

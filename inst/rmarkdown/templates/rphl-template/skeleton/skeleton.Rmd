@@ -1,0 +1,41 @@
+---
+title: "Untitled"
+author: "Nathaniel Olin"
+date: "`r date()`"
+output: 
+  pdf_document:
+    latex_engine: xelatex
+header-includes:
+  - \usepackage{titlesec}
+  - \usepackage{titling}
+  - \usepackage{fontspec}
+  - \setmainfont{Open Sans}
+  - \newfontfamily\headingfont{Montserrat}
+  - \titleformat*{\section}{\LARGE\headingfont}
+  - \titleformat*{\subsection}{\Large\headingfont}
+  - \titleformat*{\subsubsection}{\large\headingfont}
+  - \renewcommand{\maketitlehooka}{\headingfont}
+editor_options: 
+  chunk_output_type: console
+subparagraph: yes
+---
+
+```{r setup, include = F}
+library(tidyverse)
+library(rphl)
+library(extrafont)
+
+knitr::opts_chunk$set(echo = F, warning = F, message = F)
+```
+
+# Heading 1
+
+Text
+
+## Heading 2
+
+Text
+
+### Heading 3
+
+Text

@@ -9,7 +9,7 @@ phl_colors <- c(
   bell_yellow        = "#f3c613",
   flyers_orange      = "#f99300",
   kelly_drive_green  = "#58c04d",
-  light_bell         = "$ffefa2",
+  light_bell         = "#ffefa2",
   light_red          = "#fed0d0",
   light_kelly_drive  = "#b9f2b1",
   light_blue         = "#DAEDFE",
@@ -29,7 +29,7 @@ phl_colors <- c(
 #' get_colors()
 #' get_colors("ben_franklin_blue")
 #' get_colors("bell_yellow", "ben_franklin_blue")
-#'
+#' @export
 
 get_colors <- function(..., palette = phl_colors) {
   colors <- c(...)

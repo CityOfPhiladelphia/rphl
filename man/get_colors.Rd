@@ -18,5 +18,4 @@ Get names and hex codes from City of Philadelphia color palette
 get_colors()
 get_colors("ben_franklin_blue")
 get_colors("bell_yellow", "ben_franklin_blue")
-
 }

@@ -10,7 +10,6 @@
 #' @param cofint numeric, desired confidence level, must be in (0, 1)
 #' @param ... other arguments passed to modmarg::marg
 #'
-#' @examples
 #' @export
 
 sub_marg <- function(mod, subgroup,

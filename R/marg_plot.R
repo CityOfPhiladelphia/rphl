@@ -77,7 +77,9 @@
 
 marg_plot <- function(res, dat,
                       y_scale = function(x)
-                        scales::percent(x, accuracy = 0.1)){
+                        scales::percent(x, accuracy = 0.1),
+                      color_fun = scale_color_phl,
+                      label_size = 3){
   subgroup <- NULL
   res <- bind_rows(res)
 
@@ -98,7 +100,7 @@ marg_plot <- function(res, dat,
     subgroup <- names(res)[grepl("^subgroup: ", names(res))]
     subgroup <- gsub("^subgroup: ", "", subgroup)
     names(res)[grepl("^subgroup: ", names(res))] <- subgroup
-    res$subgroup_lab <- sprintf("%s = %s", subgroup, res[[subgroup]])
+    res$subgroup_lab <- res[[subgroup]] # sprintf("%s = %s", subgroup, res[[subgroup]])
 
     # If it's an effects plot, we need the full N size,
     # otherwise break it up by treatment
@@ -119,11 +121,12 @@ marg_plot <- function(res, dat,
       res[[subgroup]],
       scales::comma(res$n)))
 
-    if(length(unique(res[[var_interest]])) > 2 & !is.null(subgroup)){
+    if((length(unique(res[[var_interest]])) > 2 & !is.null(subgroup)) |
+       !any(is.na(res$P.Value))){
       p <- filter(res, !is.na(P.Value)) %>%
         ggplot(aes_string(
           x = var_interest, y = "Margin",
-          color =var_interest,
+          color = var_interest,
           label = "Label",
           ymin = "lower_ci",
           ymax = "upper_ci")) +
@@ -143,13 +146,12 @@ marg_plot <- function(res, dat,
     # No subgroups
     res <- dat %>%
       count_(var_interest) %>%
-      mutate_at(1, as.character) %>%
       left_join(res, by = var_interest)
 
-    res[[var_interest]] <- sprintf(
+    res[[var_interest]] <- forcats::fct_inorder(sprintf(
       "%s\nn = %s",
       res[[var_interest]],
-      scales::comma(res$n))
+      scales::comma(res$n)))
 
     p <- filter(res, !is.na(P.Value)) %>%
       ggplot(aes_string(
@@ -165,7 +167,7 @@ marg_plot <- function(res, dat,
     p <- p +
       scale_y_continuous(labels = y_scale) +
       geom_hline(yintercept = 0) +
-      scale_color_phl()
+      color_fun()
   } else {
     # Effects
     p <- p +
@@ -173,16 +175,16 @@ marg_plot <- function(res, dat,
         labels = y_scale,
         expand = c(0, 0, 0.05, 0)) +
       expand_limits(y = 0) +
-      scale_color_phl()
+      color_fun()
   }
 
   p <- p +
-    geom_point(show.legend = F, size = 5) +
-    geom_errorbar(show.legend = F, size = 1.5, width = 0.2) +
+    geom_pointrange(show.legend = F, size = 1.5, fatten = 2) +
     geom_text(
       aes(vjust = ifelse(Margin > 0, 0, 1)),
-      color = "black", hjust = -0.5, family = "Open Sans",
-      show.legend = F) +
+      color = "black", hjust = -0.5, family = "Montserrat",
+      show.legend = F,
+      size = label_size) +
     theme_phl() +
     labs(x = "", caption = sprintf("Bars represent %s confidence intervals", ci_level))
 

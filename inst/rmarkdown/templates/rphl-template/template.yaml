@@ -1,0 +1,4 @@
+name: rphl template
+description: >
+   An RMarkdown template for creating PDFs with City of Philadelphia formatting
+create_dir: FALSE
