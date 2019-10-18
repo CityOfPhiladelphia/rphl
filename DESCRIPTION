@@ -1,7 +1,7 @@
 Package: rphl
 Type: Package
 Title: R Functions for City of Philadelphia
-Version: 0.1.0
+Version: 0.1.1
 Author: Nathaniel Olin
 Maintainer: Nathaniel Olin <nathaniel.olin@phila.gov>
 Description: Functions for common tasks working with the 
